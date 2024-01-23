@@ -1,8 +1,8 @@
 .App {
   text-align: center;
   display: flex;
-  justify-content: center;
-  margin-top: 10%;
+  /* justify-content: center; */
+  /* margin-top: 10%; */
 }
 
 .App-logo {
@@ -38,4 +38,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+.left-col{
+  display: grid;
+  grid-template-columns: auto auto;
 }

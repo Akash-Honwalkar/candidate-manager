@@ -13,7 +13,7 @@ function App() {
   const url = "https://60d5a2c2943aa60017768b01.mockapi.io/candidate"
   useEffect(() => {
     axios.get(url).then((res) => {
-      // console.log(res.data)
+      console.log(res.data)
       setCandidate(res.data)
     }).catch((err) => {
       console.log(err)
@@ -82,7 +82,7 @@ function App() {
           element={
             <>
             <CandidateList candidate={candidate} onSelectCandidate={onSelectCandidate} />
-            <SelectedCandidate selectedCandidate={selectedCandidate} />
+            <SelectedCandidate candidate={selectedCandidate} />
             </>
           }
         />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import PersonalDetail from '../Forms/PersonalDetail';
 const CandidateForm = ({onSubmit}) => {
 
   const [formData, setFormData] = useState({
@@ -24,17 +24,19 @@ const CandidateForm = ({onSubmit}) => {
   };
 
   return (
-    <div>
+    <div className='mx-auto'>
       <h2>Add Candidate</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Your form components go here */}
+      {/* <form onSubmit={handleSubmit}>
+    
         <label>
           Name:
           <input type="text" name="name" value={formData.name} onChange={handleInputChange}  />
         </label>
-        {/* Add other form fields */}
+  
         <button type="submit">Add Candidate</button>
       </form>
+       */}
+       <PersonalDetail formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
     </div>
   )
 }

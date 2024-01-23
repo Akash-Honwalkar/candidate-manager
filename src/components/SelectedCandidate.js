@@ -1,79 +1,76 @@
-import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import React, { useState, useEffect } from 'react';
+import MultiStep from 'react-multistep';
+// import 'react-multistep/style.css';
+import axios from 'axios';
+import PersonalDetail from '../Forms/PersonalDetail';
 
-const SelectedCandidate = ({selectedCandidate}) => {
-    const [editing, setEditing] = useState(false);
-  const [editedCandidate, setEditedCandidate] = useState({ ...selectedCandidate });
-  const { id } = useParams();
-  const selectedCandidate = candidates.find((candidate) => candidate.id === parseInt(id, 10));
+const SelectedCandidate = ({ candidate }) => {
+  const [editing, setEditing] = useState(false);
+  const [editedCandidate, setEditedCandidate] = useState({ ...candidate });
+
+  const steps = [
+    { component: <PersonalDetail candidate={editedCandidate} onChange={setEditedCandidate} /> },
+    // Add more steps as needed
+  ];
+
   const handleEditClick = () => {
     setEditing(true);
   };
 
-  const handleSaveClick = () => {
-    // Implement the logic to save the edited candidate details
-    // For now, let's just update the state and exit editing mode
-    setEditing(false);
-    // You may want to make an API call to save the changes
+  const handleSaveClick = async () => {
+    try {
+      // Make an HTTP request to update the candidate
+      const response = await axios.put(`https://60d5a2c2943aa60017768b01.mockapi.io/candidate/${candidate.id}`, editedCandidate);
+
+      // Handle the response based on your API structure
+      // For example, you might want to update the state with the edited candidate
+      console.log('Candidate updated successfully:', response.data);
+
+      // Exit editing mode
+      setEditing(false);
+    } catch (error) {
+      console.error('Error updating candidate:', error);
+    }
   };
 
   const handleCancelClick = () => {
     // Reset the edited candidate details and exit editing mode
     setEditing(false);
-    setEditedCandidate({ ...selectedCandidate });
+    setEditedCandidate({ ...candidate });
   };
-
-  const handleInputChange = (e) => {
-    // Update the edited candidate details when input fields change
-    const { name, value } = e.target;
-    setEditedCandidate((prevCandidate) => ({
-      ...prevCandidate,
-      [name]: value,
-    }));
-  };
-
 
   return (
+    <div>
+      {candidate ? (
+        <>
+          <h2>Candidate Details</h2>
+          {editing ? (
+            <>
+              <MultiStep steps={steps} />
+              <button type="button" onClick={handleSaveClick}>
+                Save
+              </button>
+              <button type="button" onClick={handleCancelClick}>
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <p>Name: {candidate.name}</p>
+              {/* Display other details */}
+              <button type="button" onClick={handleEditClick}>
+                Edit
+              </button>
+            </>
+          )}
+        </>
+      ) : (
+        <p>No candidate selected</p>
+      )}
+    </div>
+  );
+};
 
-    <div className='mx-auto'>
-    {selectedCandidate ? (
-      <>
-        <h2>Candidate Details</h2>
-        {editing ? (
-          <form>
-            <label>
-              Name:
-              <input type="text" name="name" value={editedCandidate.name} onChange={handleInputChange} />
-            </label>
-            <label>
-              Email:
-              <input type="text" name="email" value={editedCandidate.email} onChange={handleInputChange} />
-            </label>
-            {/* Add other fields as needed */}
-            <button type="button" onClick={handleSaveClick}>
-              Save
-            </button>
-            <button type="button" onClick={handleCancelClick}>
-              Cancel
-            </button>
-          </form>
-        ) : (
-          <>
-            <p>Name: {selectedCandidate.name}</p>
-            <p>Email: {selectedCandidate.email}</p>
-            {/* Display other details */}
-            <button type="button" onClick={handleEditClick}>
-              Edit
-            </button>
-          </>
-        )}
-      </>
-    ) : (
-      <p>No candidate selected</p>
-    )}
-  </div>
-  )
-}
 
-export default SelectedCandidate
+
+export default SelectedCandidate;
