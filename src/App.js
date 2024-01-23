@@ -19,7 +19,10 @@ function App() {
     })
   }, [])
   const onSelectCandidate = (candidateId) => {
-    setSelectedCandidate(candidateId)
+    setSelectedCandidate(candidate.find((candidates) => candidates.id === candidateId))
+    if(selectedCandidate){
+      
+    }
   }
   return (
     <div className="App">
@@ -35,12 +38,24 @@ function App() {
           <Route
             path="/home"
             element={
-              <div className='d-flex '>
+              <div className='d-flex'>
                 <CandidateList candidate={candidate} onSelectCandidate={onSelectCandidate} />
                 <SelectedCandidate selectedCandidate={selectedCandidate} />
               </div>
             }
           />
+          <Route path="/candidate/new"
+          //  element={<CandidateForm onSubmit={/* Implement form submission */} />}
+            />
+        <Route
+          path="/candidate/:id"
+          element={
+            <>
+            <CandidateList candidate={candidate} onSelectCandidate={onSelectCandidate} />
+            <SelectedCandidate selectedCandidate={selectedCandidate} />
+            </>
+          }
+        />
         </Routes>
       </BrowserRouter>
     </div>
