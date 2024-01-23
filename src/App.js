@@ -1,23 +1,48 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CandidateList from './components/CandidateList';
+import Login from './components/Login';
+import axios from 'axios';
+import SelectedCandidate from './components/SelectedCandidate';
 
 function App() {
+  const [candidate, setCandidate] = useState([])
+  const [selectedCandidate, setSelectedCandidate] = useState(null)
+  const url = "https://60d5a2c2943aa60017768b01.mockapi.io/candidate"
+  useEffect(() => {
+    axios.get(url).then((res) => {
+      console.log(res.data)
+      setCandidate(res.data)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }, [])
+  const onSelectCandidate = (candidateId) => {
+    setSelectedCandidate(candidateId)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <Login/> */}
+
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login
+          //  onSuccess={handleSocialLoginSuccess} onFailure={handleSocialLoginFailure}
+          />} />
+
+          <Route
+            path="/home"
+            element={
+              <div className='d-flex '>
+                <CandidateList candidate={candidate} onSelectCandidate={onSelectCandidate} />
+                <SelectedCandidate selectedCandidate={selectedCandidate} />
+              </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
