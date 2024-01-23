@@ -5,6 +5,7 @@ import CandidateList from './components/CandidateList';
 import Login from './components/Login';
 import axios from 'axios';
 import SelectedCandidate from './components/SelectedCandidate';
+import CandidateForm from './components/CandidateForm';
 
 function App() {
   const [candidate, setCandidate] = useState([])
@@ -45,7 +46,10 @@ function App() {
             }
           />
           <Route path="/candidate/new"
-          //  element={<CandidateForm onSubmit={/* Implement form submission */} />}
+           element={ <>
+            <CandidateList candidate={candidate} onSelectCandidate={onSelectCandidate} />
+            <CandidateForm onSubmit="" />
+          </>}
             />
         <Route
           path="/candidate/:id"
