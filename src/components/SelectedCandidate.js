@@ -5,7 +5,8 @@ import Form from 'react-bootstrap/Form';
 const SelectedCandidate = ({selectedCandidate}) => {
     const [editing, setEditing] = useState(false);
   const [editedCandidate, setEditedCandidate] = useState({ ...selectedCandidate });
-
+  const { id } = useParams();
+  const selectedCandidate = candidates.find((candidate) => candidate.id === parseInt(id, 10));
   const handleEditClick = () => {
     setEditing(true);
   };
