@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import PersonalDetail from '../Forms/PersonalDetail';
+import MultiStep from 'react-multistep';
+import Education from '../Forms/Education';
 const CandidateForm = ({onSubmit}) => {
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    address:"",
+    phone:"",
     // Add other fields as needed
   });
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -22,21 +25,16 @@ const CandidateForm = ({onSubmit}) => {
     onSubmit(formData);
     console.log(formData)
   };
+  const steps = [
+    { component: <PersonalDetail formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/> },
+    { component: <Education /> },
+    // Add more steps as needed
+  ];
 
   return (
     <div className='mx-auto'>
       <h2>Add Candidate</h2>
-      {/* <form onSubmit={handleSubmit}>
-    
-        <label>
-          Name:
-          <input type="text" name="name" value={formData.name} onChange={handleInputChange}  />
-        </label>
-  
-        <button type="submit">Add Candidate</button>
-      </form>
-       */}
-       <PersonalDetail formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/>
+       <MultiStep steps={steps} />
     </div>
   )
 }
