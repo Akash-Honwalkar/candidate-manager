@@ -1,27 +1,37 @@
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/esm/Button'
-import {Link, useNavigate} from "react-router-dom"
+import {Link, useNavigate, useParams} from "react-router-dom"
 import "../App.css"
-const CandidateList = ({candidate,onSelectCandidate}) => {
+import { useCandidateContext }  from '../contexts/CandidateProvider'
+import {ACTIONS} from "../contexts/CandidateReducer"
+const CandidateList = () => {
+    const {id}=useParams()
 const navigate=useNavigate()
-
+    const {state,dispatch}=useCandidateContext()
   const AddNewForm=()=>{
     window.scrollTo(0,0)
     navigate("/candidate/new")
   }
-// const handleCardClick=()=>{
+const onSelectCandidate = (candidateId) => {
+    const selectedCandidate = state.candidates.find(candidate => candidate.id === candidateId);
+    console.log(selectedCandidate)
+    dispatch({ type: ACTIONS.SET_SELECTED_CANDIDATE, payload: selectedCandidate });
+      
+    }
+    console.log(state)
 
-// }
-
+    if(state.loading){
+        return <h1>Loading Candidates...</h1>
+    }
   return (
     <div >
-    <div className='left-col'>{candidate.map((candidates)=>{
+        <h2>Candidate List</h2>
+    <div className='left-col'>{state.candidates.map((candidate)=>{
       return (
-        <Card  key={candidates.id} style={{ width: '18rem' ,margin:"10px"}} onClick={()=>onSelectCandidate(candidates.id)} >
-          <Link style={{textDecoration:"none"}}to={`/candidate/${candidates.id}`}>
+        <Card  key={candidate.id} className={id===candidate.id?"activeCard":""} style={{ width: '18rem' ,margin:"10px"}} onClick={()=>onSelectCandidate(candidate.id)} >
+          <Link style={{textDecoration:"none"}}to={`/candidate/${candidate.id}`}>
                 <Card.Body>
-                    {/* <Card.Img src={candidates.profile_picture} alt={candidates.name} className='w-50 d-flex m-3'/> */}
-                    {candidates.name}
+                    {candidate.name}
                 </Card.Body>
                 </Link>
 
