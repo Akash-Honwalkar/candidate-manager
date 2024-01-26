@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PersonalDetail from '../Forms/PersonalDetail';
 import MultiStep from 'react-multistep';
 import Education from '../Forms/Education';
+import Skills from "../Forms/Skills"
 const CandidateForm = ({onSubmit}) => {
 
   const [formData, setFormData] = useState({
@@ -9,7 +10,6 @@ const CandidateForm = ({onSubmit}) => {
     email: '',
     address:"",
     phone:"",
-    // Add other fields as needed
   });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,15 +20,13 @@ const CandidateForm = ({onSubmit}) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Extract form data and call the onSubmit function to handle the submission
-    // const formData = ""
     onSubmit(formData);
     console.log(formData)
   };
   const steps = [
     { component: <PersonalDetail formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/> },
-    { component: <Education /> },
-    // Add more steps as needed
+    { component: <Education formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/> },
+    { component: <Skills formData={formData} handleInputChange={handleInputChange} handleSubmit={handleSubmit}/> },
   ];
 
   return (

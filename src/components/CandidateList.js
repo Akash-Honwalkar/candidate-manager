@@ -31,7 +31,6 @@ const onSelectCandidate = (candidateId) => {
         <Card  key={candidate.id} className={id===candidate.id?"activeCard":""} style={{ width: '18rem' ,margin:"10px"}} onClick={()=>onSelectCandidate(candidate.id)} >
           <Link style={{textDecoration:"none"}}to={`/candidate/${candidate.id}`}>
                 <Card.Body>
-                    {/* <Card.Img src={candidates.profile_picture} alt={candidates.name} className='w-50 d-flex m-3'/> */}
                     {candidate.name}
                 </Card.Body>
                 </Link>

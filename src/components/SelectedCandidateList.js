@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Button from 'react-bootstrap/esm/Button'
 import Card from 'react-bootstrap/Card'
 
@@ -11,13 +10,11 @@ const SelectedCandidateList = ({selectedCandidate,handleEditClick}) => {
            <h4>Personal Details</h4>
            <br/>
         <div className='card-details mb-5'>
-    {/* <div> {selectedCandidate.profile_picture? <img style={{width:"100px",borderRadius:"50%"}}src={selectedCandidate.profile_picture} alt={selectedCandidate.name}/>:"No profile image"} */}
     <h6>Name: {selectedCandidate.name}</h6>
     <h6>Email: {selectedCandidate.email}</h6>
     <h6>Address: {selectedCandidate.address}</h6>
     </div>
         <div className='card-details'>
-    {/* <div> {selectedCandidate.profile_picture? <img style={{width:"100px",borderRadius:"50%"}}src={selectedCandidate.profile_picture} alt={selectedCandidate.name}/>:"No profile image"} */}
     <h6 className='d-flex'>Hobbies: <span>{selectedCandidate.hobbies.map((hobby)=>(
         <ul >{hobby}</ul>
         ))}</span></h6>
@@ -70,7 +67,6 @@ const SelectedCandidateList = ({selectedCandidate,handleEditClick}) => {
       Edit
     </Button>
 </div>
-        {/* </div> */}
     </Card>
   )
 }

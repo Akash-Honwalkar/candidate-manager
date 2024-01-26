@@ -9,13 +9,10 @@ function App() {
   
   return (
     <div className="App">
-      {/* <Login/> */}
-
 
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login
-          //  onSuccess={handleSocialLoginSuccess} onFailure={handleSocialLoginFailure}
           />} />
 
           <Route
